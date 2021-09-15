@@ -1,10 +1,9 @@
 
 \documentclass[aspectratio=169]{beamer}
 \usetheme{metropolis}
- \usepackage[utf8]{inputenc}
- \usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
  %\usepackage[T1]{fontenc}
-
 
 \usepackage{listings}
 
@@ -65,34 +64,6 @@
 \newcommand{\bfe}[0]{\boldsymbol{e}}
 \newcommand{\bfi}[0]{\boldsymbol{i}}
 \newcommand{\bfp}[0]{\boldsymbol{p}}
-%
- %\usepackage{multimedia}
-%\begin{document}
-%\movie[height = 0.6 \textwidth,width = 1.0 \textwidth]{}{animation.mpg}
-
-
-%Information to be included in the title page:
-%\title{Sample title}
-%\author{Anonymous}
-%\institute{ShareLaTeX}
-%\date{2014}
-
-
- \AtBeginSection[]
-{
-  \begin{frame}
-    \frametitle{Table des matières}
-    \tableofcontents[currentsection]
-  \end{frame}
-}
-
-\AtBeginSubsection[]
-{
- \begin{frame}
-   \frametitle{Table des matières}
-   \tableofcontents[currentsubsection]
- \end{frame}
-}
 
 \begin{document}
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -105,26 +76,27 @@
 \author[Arthur Bawin]
 {Arthur Bawin}
 
-% \institute[] % (optional)
-% {
-%   \inst{1}%
-%   Université catholique de Louvain
-%   \and
-%   \inst{2}%
-%   École Polytechnique de Montréal
-% }
-
 \date[EPM 2021] % (optional)
 {École Polytechnique de Montréal, 17 septembre 2021}
 
-%\logo{\includegraphics[height=1.5cm]{lion-logo.png}}
+\titlegraphic{
+  \vspace{-1cm}
+  \hspace{11cm}
+  \includegraphics[width=.3\textwidth,height=.5\textheight]{figures/gmsh.png}
+  \\[3cm]
+  \includegraphics[scale=0.31]{figures/gps.png}
+  \hspace{1.2cm}
+  \includegraphics[scale=0.25]{figures/ucl.png}
+  \hspace{1.2cm}
+  \includegraphics[scale=0.5]{figures/poly.png}
+}
+
 \frame{\titlepage}
 
 \begin{frame}
 \frametitle{Licence}
 Cette présentation \textit{open source} est sous License MIT. Le code source et les figures de la présentation sont disponibles sur Github : \url{https://github.com/arthurbawin/presentationGmshSept2021} \\
 ~\\
-%\;\\
 \textbf{ Copyright 2021 Arthur Bawin}
 
 \footnotesize{Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -132,30 +104,23 @@ The above copyright notice and this permission notice shall be included in all c
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{But de la présentation}
-Présentation et premiers pas avec Gmsh : création d'une géométrie 2D simple et définition de champs de tailles, avec le GUI, en ligne de commande ou avec l'API
-\end{frame}
-
-\begin{frame}
-\frametitle{Table des matières}
-\tableofcontents
-\end{frame}
-
-\section{Qu'est-ce que Gmsh ?}
-\begin{frame}[fragile]
-\frametitle{Gmsh c'est...}
+\frametitle{Qu'est-ce que Gmsh ?}
+Gmsh c'est...
+\vspace{-0.1cm}
 \begin{itemize}
   \item ... \textbf{un outil basique de modélisation géométrique}
   \item ... \textbf{un générateur de maillages} 1D, 2D et 3D
   \begin{itemize}
-    \item simpliciaux (triangles/tétraèdres) et outils pour maillages quadrangles/hexaèdres
-    \item courbes sur les frontières CAD
+    \item[$\circ$] simpliciaux (triangles/tétraèdres) et outils pour maillages quadrangles/hexaèdres
+    \item[$\circ$] courbes sur les frontières CAD
   \end{itemize}
   \item ... une interface vers des solveurs externes (via ONELAB)
-  \item ... un outil de visualisation et de post-traitement
-  \item ... un logiciel libre, gratuit et open-source en développement actif
+  \item ... un outil de \textbf{visualisation} et de \textbf{post-traitement}
+  \item ... \textbf{un logiciel libre}, gratuit et open-source en développement actif\\
+  \url{https://gmsh.info/} et \url{https://gitlab.onelab.info/gmsh/gmsh}
 \end{itemize}
 Utilisation :
+\vspace{-0.1cm}
 \begin{itemize}
   \item \textbf{via l'interface graphique} (mode interactif)
   \item \textbf{en ligne de commande} (mode non-interactif)
@@ -163,10 +128,35 @@ Utilisation :
 \end{itemize}
 \end{frame}
 
-\section{Maillage d'une géométrie 2D...}
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item en ligne de commande et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Table des matières}
+% \tableofcontents
+% \end{frame}
+
+% \section{Maillage d'une géométrie 2D...}
 \begin{frame}[fragile]
 \frametitle{Un exemple de géométrie 2D}
-\only<1>{Considérons le problème suivant :}
+\only<1>{Écoulement de fluide visqueux newtonien autour d'un cylindre}
 \only<2>{Étape par étape :}
 
 \begin{columns}
@@ -206,10 +196,10 @@ Utilisation :
     \only<1>{
       \begin{align*}
         \nabla \cdot \bfu &= 0\\
-        (\bfu \cdot \nabla)\,\bfu &= -\frac{1}{\rho}\nabla p + \nu \Delta \bfu\\
+        \rho(\bfu \cdot \nabla)\,\bfu &= \nabla \cdot \sigma(\bfu)\\
         \bfu &= u_1 \text{ sur } \Gamma_1\\
         \bfu &= u_2 \text{ sur } \Gamma_2\\
-        \sigma \cdot \bfn &= \mathbf{0} ~\text{ sur } \Gamma_3\\
+        \sigma(\bfu) \cdot \bfn &= \mathbf{0} ~\text{ sur } \Gamma_3\\
         \bfu &= \mathbf{0}~ \text{  sur } \Gamma_4
       \end{align*}
       }
@@ -253,10 +243,30 @@ Utilisation :
 \footnotetext[2]{\tiny\url{https://en.wikipedia.org/wiki/Constructive_solid_geometry}}
 \end{frame}
 
-\subsection{... à l'aide de l'interface graphique}
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item \textbf{via l'interface graphique}
+  \begin{itemize}
+    \item[$\circ$] \textbf{création d'une géométrie 2D simple}
+  \end{itemize}
+  \item en ligne de commande et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+\end{frame}
+
+% \subsection{... à l'aide de l'interface graphique}
 \begin{frame}[fragile]
 \frametitle{Créer la géométrie dans l'interface graphique}
-0 : Set geometry kernel $>$ OpenCASCADE
+0 : Set geometry kernel $>$ OpenCASCADE (noyau CAD : Gmsh ou OpenCASCADE)
 \begin{columns}
   \begin{column}{0.5\textwidth}
 
@@ -289,7 +299,7 @@ Utilisation :
   \end{column}
 \end{columns}
 
-La taille caractéristique doit être spécifiée en chaque point (1.0 par défaut)
+Taille caractéristique des éléments à spécifier en chaque point (1.0 par défaut)
 
 \end{frame}
 
@@ -324,18 +334,72 @@ La taille caractéristique doit être spécifiée en chaque point (1.0 par défa
   \end{column}
 \end{columns}
 % \footnotesize
-Ensuite (pas illustré ici : plus facile de passer par un script .geo ou l'API) :
-\vspace{-0.2cm}
-\begin{enumerate}
-  \item[2.] Définir les entités physiques (groupes nommés d'entités géométriques)
-  \item[3.] Spécifier éventuellement la taille grâce à un champ de taille
-  \item[4.] Générer le maillage
-\end{enumerate}
+% Ensuite (pas illustré ici : plus facile de passer par un script .geo ou l'API) :
+% \vspace{-0.2cm}
+% \begin{enumerate}
+%   \item[2.] Définir les entités physiques (groupes nommés d'entités géométriques)
+%   \item[3.] Spécifier éventuellement la taille grâce à un champ de taille
+%   \item[4.] Générer le maillage
+% \end{enumerate}
 
 \end{frame}
 
-\subsection{... en ligne de commande}
+\begin{frame}[fragile]
+\frametitle{Générer le maillage dans l'interface graphique}
+\textbf{Carte de taille} $h(\mathbf{x})$ nécessaire à l'algorithme de maillage : par défaut, taille aux Points est interpolée sur les courbes, puis dans la surface (maillage surface vers volume)\\
+Pour mailler : Mesh $\rightarrow$ 2D ou "2"
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{figure}
+      \centering
+      \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0)
+        {\includegraphics[width=\linewidth]{figures/mesh.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+          % \draw[draw=orange, thick] (0.07,0.55) rectangle ++(0.05,0.035);
+        \end{scope}
+      \end{tikzpicture}
+      \caption{Avec noyau OpenCASCADE}
+    \end{figure}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \begin{figure}
+      \centering
+      \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0)
+        {\includegraphics[width=\linewidth]{figures/bad.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+          % \draw[draw=orange, thick] (0.07,0.38) rectangle ++(0.095,0.035);
+        \end{scope}
+      \end{tikzpicture}
+      \caption{Sans noyau OpenCASCADE : erreur !}
+    \end{figure}
+  \end{column}
+\end{columns}
+Les entités de chaque noyau CAD ne communiquent pas : utiliser OpenCASCADE si au moins un appel à une fonction OpenCASCADE est nécessaire (ici, Circle)
+\end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item \textbf{en ligne de commande} et via l'API
+  \begin{itemize}
+    \item[$\circ$] \textbf{syntaxe et fonctions du langage .geo}
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+\end{frame}
+
+% \subsection{... en ligne de commande}
 \begin{frame}[fragile]
 \frametitle{Script .geo et syntaxe Gmsh}
 \begin{itemize}
@@ -400,6 +464,27 @@ Ensuite (pas illustré ici : plus facile de passer par un script .geo ou l'API) 
   Physical Volume(tag) = {expr-list volumeTags};
   Physical Volume(char-expr name) = {expr-list volumeTags};
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item \textbf{en ligne de commande} et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] \textbf{création de la géométrie et définition d'entités physiques}
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+{\color{blue} \textbf{Tutoriels de la doc. associés spécifiés en haut à droite}}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -559,6 +644,27 @@ Cocher dans Tools $\rightarrow$ Options $\rightarrow$ Geometry $\rightarrow$ Vis
   \item Possible de ne sauver que les entités physiques
   \item Entités physiques requises par certains solveurs (p. ex. MFEM)
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item \textbf{en ligne de commande} et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] \textbf{spécification de la taille des éléments}
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+{\color{blue} \textbf{Tutoriels de la doc. associés spécifiés en haut à droite}}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -734,6 +840,26 @@ Background Field = 4;
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item \textbf{en ligne de commande} et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] \textbf{génération du maillage}
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Générer le maillage}
 Dans l'interface graphique :
 \begin{enumerate}
@@ -773,10 +899,30 @@ gmsh foo.geo -2 -bgm fooUniform.p4est -o mesh.msh
 \end{lstlisting}
 \end{frame}
 
-\subsection{... via l'API C/C++/Python/Julia}
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item en ligne de commande et \textbf{via l'API}
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+\end{frame}
+
+% \subsection{... via l'API C/C++/Python/Julia}
 
 \begin{frame}[fragile]
-\frametitle{API Gmsh}
+\frametitle{API : programmer avec Gmsh}
   Application Programming Interface disponible en C, C++, Python et Julia \\
   \begin{itemize}
     \item \texttt{gmsh/model} :
@@ -798,7 +944,7 @@ gmsh foo.geo -2 -bgm fooUniform.p4est -o mesh.msh
         \end{lstlisting}
     \end{itemize}
     \item \texttt{gmsh/view} : Créer et modifier des instances de post-traitment (\texttt{views})
-    \item Liste complète et spécification des fonctions : \url{https://gmsh.info/doc/texinfo/gmsh.html#Gmsh-API}\\
+    \item Liste complète et spécification des fonctions : \texttt{gmshc.h, gmsh.h/.py/.jl}\url{https://gmsh.info/doc/texinfo/gmsh.html#Gmsh-API}\\
     \textbf{(Beaucoup) plus de possibilités qu'avec un fichier .geo !}
   \end{itemize}
 
@@ -1061,7 +1207,27 @@ gmsh foo.geo -2 -bgm fooUniform.p4est -o mesh.msh
   \end{columns}
 \end{frame}
 
-\section{Visualisation}
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item en ligne de commande et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item \textbf{visualisation avec Gmsh}
+  \item exemple d'adaptation de maillage via l'API C++
+\end{itemize}
+\end{frame}
+
+% \section{Visualisation}
 \begin{frame}[fragile]
 \frametitle{Visualisation}
 \begin{columns}
@@ -1099,7 +1265,27 @@ gmsh foo.geo -2 -bgm fooUniform.p4est -o mesh.msh
 \end{figure}
 \end{frame}
 
-\section{Adaptation isotrope à partir d'un maillage de fond}
+\begin{frame}[fragile]
+\frametitle{Plan de la présentation}
+Premiers pas avec Gmsh : maillage non-structuré d'une géométrie 2D avec des triangles
+\begin{itemize}
+  \item via l'interface graphique
+  \begin{itemize}
+    \item[$\circ$] création d'une géométrie 2D simple
+  \end{itemize}
+  \item en ligne de commande et via l'API
+  \begin{itemize}
+    \item[$\circ$] syntaxe et fonctions du langage .geo
+    \item[$\circ$] création de la géométrie et définition d'entités physiques
+    \item[$\circ$] spécification de la taille des éléments
+    \item[$\circ$] génération du maillage
+  \end{itemize}
+  \item visualisation avec Gmsh
+  \item \textbf{exemple d'adaptation de maillage via l'API C++}
+\end{itemize}
+\end{frame}
+
+% \section{Adaptation isotrope à partir d'un maillage de fond}
 \begin{frame}[fragile]
 \frametitle{Adaptation à partir d'un maillage de fond avec \texttt{PostView}}
 \begin{itemize}
@@ -1108,7 +1294,7 @@ gmsh foo.geo -2 -bgm fooUniform.p4est -o mesh.msh
   \item Borne de l'erreur d'interpolation :
   \begin{equation*}
     \footnotesize
-    \underbrace{\max_{\bfx \,\in \,\mathcal{C}} \vert f(\bfx) - \pi^2f(\bfx) \vert}_{e} \leq \frac{h^3}{6} \underbrace{\sup_{\bfx \,\in \,\mathcal{C}} \biggr\vert \frac{\partial^3 f}{\partial x^i \partial x^j \partial x^k} \,g^ig^jg^k \biggr\vert}_{E} ~~~ \longrightarrow  ~~~ h = \left(\frac{6e}{E}\right)^{\frac{1}{3}}
+    \underbrace{\max_{\bfx \,\in \,\mathcal{C}} \vert f(\bfx) - \pi^2f(\bfx) \vert}_{e} \leq \frac{h^3}{6} \underbrace{\sup_{\bfx \,\in \,\mathcal{C}} \biggr\vert \frac{\partial^3 f}{\partial x^i \partial x^j \partial x^k} \,g^ig^jg^k \biggr\vert}_{E} ~~~ \rightarrow  ~~~ h = \left(\frac{6e}{E}\right)^{\frac{1}{3}}
   \end{equation*}
   \begin{figure}
     \hspace{-0.8cm}
@@ -1242,14 +1428,29 @@ Lectures conseillées :
 
 \begin{frame}[fragile]
 \frametitle{}
-Téléchargez, modifiez, contribuez !
+\begin{minipage}[t]{1.1\linewidth}
+  \hspace{-1cm}
+  \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (image) at (0,0)
+    {\includegraphics[width=1.02\linewidth]{figures/endSlide.png}};
+    % \begin{scope}[x={(image.south east)},y={(image.north west)}]
+      \node[font={\bfseries}] at (5.8,4.7) {Téléchargez, modifiez, contribuez !};
+      \node[font={\bfseries}] at (5.1,4.25) {\url{https://gmsh.info/}};
+      \node[font={\bfseries}] at (7.5,3.8) {\url{https://gitlab.onelab.info/gmsh/gmsh}};
+    % \end{scope}
+  \end{tikzpicture}
+\end{minipage}
+
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Références}
+\begin{itemize}
+  \item C. Geuzaine and J.-F. Remacle. Gmsh: a three-dimensional finite element mesh generator with built-in pre- and post-processing facilities. International Journal for Numerical Methods in Engineering 79(11), pp. 1309-1331, 2009.
+  \item Documentation et tutoriels : \url{https://gmsh.info/doc/texinfo/gmsh.html}
+  \item Images : \url{https://gmsh.info/} et \url{http://onelab.info/}
+\end{itemize}
 
 \end{frame}
-
-
 
 \end{document}
